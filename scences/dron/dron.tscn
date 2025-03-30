@@ -1,4 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvtujcx83mhwd"]
+[gd_scene load_steps=22 format=3 uid="uid://dvtujcx83mhwd"]
+
+[ext_resource type="AudioStream" uid="uid://c1fkr502jvsia" path="res://sounds/motor1.wav" id="1_v54er"]
+[ext_resource type="AudioStream" uid="uid://cvvrebqh67tsg" path="res://sounds/motor2.wav" id="2_6v4bg"]
+[ext_resource type="AudioStream" uid="uid://dbj37l3pkpc6k" path="res://sounds/motor3.wav" id="3_xatn1"]
+[ext_resource type="AudioStream" uid="uid://dss78gps7po8x" path="res://sounds/motor4.wav" id="4_7md8o"]
+[ext_resource type="AudioStream" uid="uid://co5jbbfok0rcn" path="res://sounds/motor5.wav" id="5_ahmqd"]
+[ext_resource type="AudioStream" uid="uid://bkhghrre75qm8" path="res://sounds/motor6.wav" id="6_thx7v"]
+[ext_resource type="AudioStream" uid="uid://bnlg8wim5h3y0" path="res://sounds/motor7.wav" id="7_u4ngy"]
+[ext_resource type="AudioStream" uid="uid://chk45nqa85cw0" path="res://sounds/idle.wav" id="8_uptls"]
 
 [sub_resource type="GDScript" id="GDScript_i78y6"]
 script/source = "extends CharacterBody3D
@@ -8,6 +17,15 @@ var gravity = ProjectSettings.get_setting(\"physics/3d/default_gravity\")
 var proc = 0
 var a = Vector3(0,0,0)
 
+@onready var motor_sound_0 = $idler
+@onready var motor_sound_1 = $light_motor
+@onready var motor_sound_2 = $light_motor1
+@onready var motor_sound_3 = $middle_motor
+@onready var motor_sound_4 = $middle_motor1
+@onready var motor_sound_5 = $Hard0
+@onready var motor_sound_6 = $Hard1
+@onready var motor_sound_7 = $Hard2
+
 func _physics_process(delta):
 	# Процент тяги двигателя
 	if Input.is_action_pressed(\"ui_up\"):
@@ -15,12 +33,49 @@ func _physics_process(delta):
 	elif Input.is_action_pressed(\"ui_down\"):
 		proc-=0.01
 	proc = clamp(proc, 0, 1)
+	motor_sound_1.volume_db = -30
+	motor_sound_2.volume_db = -30
+	motor_sound_0.volume_db = -30
+	if proc < 0.3:
+		motor_sound_1.volume_db = -30*(1-proc/0.1)-30
+		motor_sound_2.volume_db = -30*(1-proc/0.1)-30
+		motor_sound_0.volume_db = -30*(1-proc/0.1)-30
+		if not motor_sound_1.playing:
+			motor_sound_1.play()
+		if not motor_sound_2.playing:
+			motor_sound_2.play()
+		if not motor_sound_0.playing:
+			motor_sound_0.play()
+	elif proc < 0.7:
+		if not motor_sound_3.playing:
+			motor_sound_3.play()
+		if not motor_sound_4.playing:
+			motor_sound_4.play()
+		if not motor_sound_5.playing:
+			motor_sound_5.play()
+	else:
+		if not motor_sound_5.playing:
+			motor_sound_5.play()
+		if not motor_sound_6.playing:
+			motor_sound_6.play()
+		if not motor_sound_7.playing:
+			motor_sound_7.play()
+	
+	var speed = lerp(0, 3600, proc)  # Переводим процент в градусы в секунду
+	
+	# Анимация кручения винтов
+	$prop1.rotation_degrees.y += speed * delta 
+	$prop2.rotation_degrees.y += speed * delta
+	$prop3.rotation_degrees.y += speed * delta
+	$prop4.rotation_degrees.y += speed * delta
 	
 	var rot = global_transform.basis.get_euler()
 
 	if Input.is_action_pressed(\"yaw_left\"):
+		rot.z = 0
 		rot.y += deg_to_rad(1)  # Поворот вокруг оси Z (roll)
 	elif Input.is_action_pressed(\"yaw_right\"):
+		rot.z = 0
 		rot.y -= deg_to_rad(1)  #
 
 	if Input.is_action_pressed(\"pitch_up\"):
@@ -29,8 +84,10 @@ func _physics_process(delta):
 		rot.x -= deg_to_rad(1)  # Поворот вокруг оси X (pitch)
 	
 	if Input.is_action_pressed(\"roll_left\"):
+		rot.y = 0
 		rot.z += deg_to_rad(1)  # Поворот вокруг оси Z (roll)
 	elif Input.is_action_pressed(\"roll_right\"):
+		rot.y = 0
 		rot.z -= deg_to_rad(1)  # Поворот вокруг оси Z (roll)
 
 	# Обновляем матрицу трансформации объекта с новым углом поворота
@@ -43,29 +100,210 @@ func _physics_process(delta):
 	var yaw = rot.y  # Вращение вокруг оси Y (направление влево/вправ)
 	var pitch = rot.x  # Вращение вокруг оси X (направление вверх/вниз)
 	var roll = rot.z  # Вращение вокруг оси Z (наклон объекта)
-	print(\"Углы\", yaw, roll, pitch)
+
 	a = Utils.acceleration(velocity,0.5, gravity,proc,position.y,yaw, roll,pitch)
-	
+	print(\"Углы \", rad_to_deg(yaw),\" \",  rad_to_deg(roll),\" \", rad_to_deg(pitch))
 	velocity = velocity + a*delta
-	print(velocity, proc)
+	print(\"Скорость \",velocity.length()*3.6)
+	print(\"Вертикальная скорость \", velocity.y)
+	print(\"Мощность двигателя \", proc*100, \"%\")
+	print(\"Высота \", position.y)
 	move_and_slide()
 	
 "
 
 [sub_resource type="BoxMesh" id="BoxMesh_of6dv"]
+size = Vector3(1, 0.1, 0.4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3r5m6"]
+size = Vector3(1.07263, 0.22506, 0.395142)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d23xd"]
+size = Vector3(0.4, 0.12, 0.4)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_315cs"]
+radius = 0.1
+height = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_7j6f6"]
+size = Vector3(0.1, 0.05, 2)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_oqmk1"]
+top_radius = 0.01
+bottom_radius = 0.01
+height = 0.04
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qv1hp"]
+size = Vector3(1.99921, 0.116455, 0.175751)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h7aex"]
+size = Vector3(1, 0.01, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4q8ne"]
+size = Vector3(0.05, 0.2, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3yumr"]
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tpp3a"]
+size = Vector3(1, 0.146973, 0.0975342)
+
+[sub_resource type="BoxMesh" id="BoxMesh_icnec"]
+size = Vector3(0.01, 0.001, 1)
 
 [node name="dron" type="CharacterBody3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = SubResource("GDScript_i78y6")
 metadata/_edit_group_ = true
 
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.999921, -0.00447472, 0.0117798, 3.09025e-15, 0.934826, 0.355107, -0.012601, -0.355079, 0.934752, -0.382714, 1.62076, 2.31551)
+fov = 73.125
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, -0.0820814, -0.022005, 0.0817533)
 mesh = SubResource("BoxMesh_of6dv")
+metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, -0.0835657, 0.0342685, 0.047586)
 shape = SubResource("BoxShape3D_3r5m6")
+metadata/_edit_group_ = true
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.934764, 0.35527, 0, -0.35527, 0.934764, -0.226069, 1.62076, 2.23739)
-fov = 73.125
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, -0.0820343, 0.0820466, -0.218335)
+mesh = SubResource("BoxMesh_d23xd")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.000924994, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, -0.000924994, -4.04328e-11, -0.0838736, 0.0362924, -0.0378727)
+mesh = SubResource("CapsuleMesh_315cs")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.000924994, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, -0.000924994, -4.04328e-11, -0.0842116, 0.0362924, -0.403147)
+mesh = SubResource("CapsuleMesh_315cs")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.774117, 0, -0.633043, 0, 1, 0, 0.633043, 0, -0.774117, -0.0821437, 0.0141211, 0.0143056)
+mesh = SubResource("BoxMesh_7j6f6")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.775526, -0.0024554, -0.631311, 0.00174533, 0.999997, -0.00174533, 0.631314, 0.000251704, 0.775527, -0.0821437, 0.0141211, 0.0143056)
+mesh = SubResource("BoxMesh_7j6f6")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, 0.522867, 0.0493468, -0.724219)
+mesh = SubResource("CylinderMesh_oqmk1")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, 0.524537, 0.049, 0.749947)
+mesh = SubResource("CylinderMesh_oqmk1")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, -0.688826, 0.049, -0.722686)
+mesh = SubResource("CylinderMesh_oqmk1")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, -0.687462, 0.049, 0.751314)
+mesh = SubResource("CylinderMesh_oqmk1")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(-0.652588, 0, -0.757713, 0, 1, 0, 0.757713, 0, -0.652588, -0.0764785, 0.0318232, 0.0173213)
+shape = SubResource("BoxShape3D_qv1hp")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.654121, 0, -0.75639, 0, 1, 0, 0.75639, 0, 0.654121, -0.0764785, 0.0318232, 0.0173213)
+shape = SubResource("BoxShape3D_qv1hp")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, -0.258552, -0.195858, 0.0819166)
+mesh = SubResource("BoxMesh_h7aex")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.325123, 0.0969058, -0.000506014)
+mesh = SubResource("BoxMesh_4q8ne")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.445437, 0.0969058, -0.000506014)
+mesh = SubResource("BoxMesh_4q8ne")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, 0.0923033, -0.195858, 0.081592)
+mesh = SubResource("BoxMesh_h7aex")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.325123, 0.0969058, -0.000506014)
+mesh = SubResource("BoxMesh_4q8ne")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.445437, 0.0969058, -0.000506014)
+mesh = SubResource("BoxMesh_4q8ne")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, -0.0820814, -0.0330143, 0.0817533)
+mesh = SubResource("CylinderMesh_3yumr")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, 0.0936388, -0.131891, 0.0815908)
+shape = SubResource("BoxShape3D_tpp3a")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, -0.258607, -0.131891, 0.0819166)
+shape = SubResource("BoxShape3D_tpp3a")
+metadata/_edit_group_ = true
+
+[node name="prop1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.491356, -0.37296, 0.787064, 0.604599, 0.79653, 3.07101e-08, -0.62692, 0.475859, 0.616871, 0.522299, 0.0543846, -0.719957)
+mesh = SubResource("BoxMesh_icnec")
+
+[node name="prop2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.491356, -0.37296, 0.787064, 0.604599, 0.79653, 3.07101e-08, -0.62692, 0.475859, 0.616871, -0.689072, 0.0507534, 0.748794)
+mesh = SubResource("BoxMesh_icnec")
+
+[node name="prop3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.491356, -0.37296, 0.787064, 0.604599, 0.79653, 3.07101e-08, -0.62692, 0.475859, 0.616871, -0.689752, 0.0543846, -0.72247)
+mesh = SubResource("BoxMesh_icnec")
+
+[node name="prop4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.491356, -0.37296, 0.787064, 0.604599, 0.79653, 3.07101e-08, -0.62692, 0.475859, 0.616871, 0.518775, 0.0507534, 0.743121)
+mesh = SubResource("BoxMesh_icnec")
+
+[node name="light_motor" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_v54er")
+
+[node name="light_motor1" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_6v4bg")
+
+[node name="middle_motor" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_xatn1")
+
+[node name="middle_motor1" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_7md8o")
+
+[node name="Hard0" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_ahmqd")
+
+[node name="Hard1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_thx7v")
+
+[node name="Hard2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_u4ngy")
+
+[node name="idler" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_uptls")
