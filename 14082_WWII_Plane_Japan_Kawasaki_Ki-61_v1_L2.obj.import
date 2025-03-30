@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cpbyss1jytm8x"
+path="res://.godot/imported/14082_WWII_Plane_Japan_Kawasaki_Ki-61_v1_L2.obj-1da36e22aaa070909fdc5a617061833f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/14082_WWII_Plane_Japan_Kawasaki_Ki-61_v1_L2.obj-1da36e22aaa070909fdc5a617061833f.mesh"]
+
+source_file="res://14082_WWII_Plane_Japan_Kawasaki_Ki-61_v1_L2.obj"
+dest_files=["res://.godot/imported/14082_WWII_Plane_Japan_Kawasaki_Ki-61_v1_L2.obj-1da36e22aaa070909fdc5a617061833f.mesh", "res://.godot/imported/14082_WWII_Plane_Japan_Kawasaki_Ki-61_v1_L2.obj-1da36e22aaa070909fdc5a617061833f.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

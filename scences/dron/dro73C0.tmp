@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvtujcx83mhwd"]
+
+[sub_resource type="GDScript" id="GDScript_i78y6"]
+script/source = "extends CharacterBody3D
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting(\"physics/3d/default_gravity\")
+var proc = 0
+var a = Vector3(0,0,0)
+
+func _physics_process(delta):
+	# Процент тяги двигателя
+	if Input.is_action_pressed(\"ui_up\"):
+		proc+=0.01
+	elif Input.is_action_pressed(\"ui_down\"):
+		proc-=0.01
+	proc = clamp(proc, 0, 1)
+	
+	var rot = global_transform.basis.get_euler()
+
+	if Input.is_action_pressed(\"yaw_left\"):
+		rot.y += deg_to_rad(1)  # Поворот вокруг оси Z (roll)
+	elif Input.is_action_pressed(\"yaw_right\"):
+		rot.y -= deg_to_rad(1)  #
+
+	if Input.is_action_pressed(\"pitch_up\"):
+		rot.x += deg_to_rad(1)  # Поворот вокруг оси X (pitch)
+	elif Input.is_action_pressed(\"pitch_down\"):
+		rot.x -= deg_to_rad(1)  # Поворот вокруг оси X (pitch)
+	
+	if Input.is_action_pressed(\"roll_left\"):
+		rot.z += deg_to_rad(1)  # Поворот вокруг оси Z (roll)
+	elif Input.is_action_pressed(\"roll_right\"):
+		rot.z -= deg_to_rad(1)  # Поворот вокруг оси Z (roll)
+
+	# Обновляем матрицу трансформации объекта с новым углом поворота
+	# Обновляем Basis объекта с новым углом поворота
+	var basis = Basis().rotated(Vector3(1, 0, 0), rot.x)  # Поворот вокруг оси X (pitch)
+	basis = basis.rotated(Vector3(0, 1, 0), rot.y)  # Поворот вокруг оси Y (yaw)
+	basis = basis.rotated(Vector3(0, 0, 1), rot.z)  # Поворот вокруг оси Z (roll)
+	global_transform.basis = basis
+	
+	var yaw = rot.y  # Вращение вокруг оси Y (направление влево/вправ)
+	var pitch = rot.x  # Вращение вокруг оси X (направление вверх/вниз)
+	var roll = rot.z  # Вращение вокруг оси Z (наклон объекта)
+	print(\"Углы\", yaw, roll, pitch)
+	a = Utils.acceleration(velocity,0.5, gravity,proc,position.y,yaw, roll,pitch)
+	
+	velocity = velocity + a*delta
+	print(velocity, proc)
+	move_and_slide()
+	
+"
+
+[sub_resource type="BoxMesh" id="BoxMesh_of6dv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3r5m6"]
+
+[node name="dron" type="CharacterBody3D"]
+script = SubResource("GDScript_i78y6")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_of6dv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_3r5m6")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.934764, 0.35527, 0, -0.35527, 0.934764, -0.226069, 1.62076, 2.23739)
+fov = 73.125
