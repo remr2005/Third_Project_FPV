@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2mrpqixbsfml"]
+[gd_scene load_steps=7 format=3 uid="uid://c2mrpqixbsfml"]
 
 [ext_resource type="Script" path="res://World.gd" id="1_6vyjw"]
 [ext_resource type="PackedScene" uid="uid://dvtujcx83mhwd" path="res://scences/dron/dron.tscn" id="2_mswk8"]
 [ext_resource type="AudioStream" uid="uid://c1ujpxjuk6xw6" path="res://sounds/04-Meydan-Surreal-Forest(chosic.com).mp3" id="3_dud80"]
+[ext_resource type="PackedScene" uid="uid://bgclpobbc2dln" path="res://scences/leopard/leopard.tscn" id="4_wpn5r"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_xh2ix"]
 size = Vector3(2000, 1, 2000)
@@ -32,3 +33,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.265207, 1.80179, 0.430694)
 stream = ExtResource("3_dud80")
 volume_db = -19.66
 autoplay = true
+
+[node name="Leopard" parent="." instance=ExtResource("4_wpn5r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.3842, -32.538)

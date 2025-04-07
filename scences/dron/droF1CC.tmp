@@ -26,7 +26,7 @@ var a = Vector3(0,0,0)
 @onready var motor_sound_5 = $Hard0
 @onready var motor_sound_6 = $Hard1
 @onready var motor_sound_7 = $Hard2
-@onready var bomb = $SecretWeapon
+@onready var  bomb = $SecretWeapon
 
 func _physics_process(delta):
 	# Процент тяги двигателя
