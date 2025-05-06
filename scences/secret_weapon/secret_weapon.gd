@@ -14,7 +14,7 @@ func _on_body_entered(body):
 		body.queue_free()
 		self.queue_free()
 
-func detach_from_parent():
+func detach_from_parent(carrier_velocity: Vector3):
 	var global_pos = global_transform
 
 	var root = get_tree().current_scene
@@ -22,5 +22,9 @@ func detach_from_parent():
 	root.add_child(self)
 
 	global_transform = global_pos
+
 	if self is RigidBody3D:
 		freeze = false
+
+		# Присваиваем начальную скорость, равную скорости дрона
+		linear_velocity = carrier_velocity

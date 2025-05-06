@@ -73,40 +73,33 @@ func _physics_process(delta):
 	$prop3.rotation_degrees.y += speed * delta
 	$prop4.rotation_degrees.y += speed * delta
 	
-	var rot = global_transform.basis.get_euler()
+	var rot = global_transform.basis
 
 	if Input.is_action_pressed(\"yaw_left\"):
-		rot.z = 0
-		rot.y += deg_to_rad(1)  # Поворот вокруг оси Z (roll)
+		rot = rot.rotated(rot.y, deg_to_rad(1))  # Поворот вокруг оси Z (roll)
 	elif Input.is_action_pressed(\"yaw_right\"):
-		rot.z = 0
-		rot.y -= deg_to_rad(1)  #
+		rot = rot.rotated(rot.y, deg_to_rad(-1)) 
 
 	if Input.is_action_pressed(\"pitch_up\"):
-		rot.x += deg_to_rad(1)  # Поворот вокруг оси X (pitch)
+		rot = rot.rotated(rot.x, deg_to_rad(1))   # Поворот вокруг оси X (pitch)
 	elif Input.is_action_pressed(\"pitch_down\"):
-		rot.x -= deg_to_rad(1)  # Поворот вокруг оси X (pitch)
+		rot = rot.rotated(rot.x, deg_to_rad(-1))   # Поворот вокруг оси X (pitch)
 	
 	if Input.is_action_pressed(\"roll_left\"):
-		rot.y = 0
-		rot.z += deg_to_rad(1)  # Поворот вокруг оси Z (roll)
+		rot = rot.rotated(rot.z, deg_to_rad(1))   # Поворот вокруг оси Z (roll)
 	elif Input.is_action_pressed(\"roll_right\"):
-		rot.y = 0
-		rot.z -= deg_to_rad(1)  # Поворот вокруг оси Z (roll)
-
+		rot = rot.rotated(rot.z, deg_to_rad(-1))   # Поворот вокруг оси Z (roll)
+	
 	# Обновляем матрицу трансформации объекта с новым углом поворота
 	# Обновляем Basis объекта с новым углом поворота
-	var basis = Basis().rotated(Vector3(1, 0, 0), rot.x)  # Поворот вокруг оси X (pitch)
-	basis = basis.rotated(Vector3(0, 1, 0), rot.y)  # Поворот вокруг оси Y (yaw)
-	basis = basis.rotated(Vector3(0, 0, 1), rot.z)  # Поворот вокруг оси Z (roll)
-	global_transform.basis = basis
-	
+	global_transform.basis = rot
+	rot = rot.get_euler()
 	var yaw = rot.y  # Вращение вокруг оси Y (направление влево/вправ)
 	var pitch = rot.x  # Вращение вокруг оси X (направление вверх/вниз)
 	var roll = rot.z  # Вращение вокруг оси Z (наклон объекта)
 
 	if Input.is_action_just_pressed(\"ui_accept\"):
-		bomb.detach_from_parent()
+		bomb.detach_from_parent(velocity)
 	a = Utils.acceleration(velocity,0.5, gravity,proc,position.y,yaw, roll,pitch)
 	print(\"Углы \", rad_to_deg(yaw),\" \",  rad_to_deg(roll),\" \", rad_to_deg(pitch))
 	velocity = velocity + a*delta
@@ -114,6 +107,7 @@ func _physics_process(delta):
 	print(\"Вертикальная скорость \", velocity.y)
 	print(\"Мощность двигателя \", proc*100, \"%\")
 	print(\"Высота \", position.y)
+	print(\"Базис \", rot*Vector3(0,deg_to_rad(90),0))
 	move_and_slide()
 	
 "
