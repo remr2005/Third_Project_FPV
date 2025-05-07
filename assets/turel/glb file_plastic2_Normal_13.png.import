@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://bushv8eobdd3k"
+path.s3tc="res://.godot/imported/glb file_plastic2_Normal_13.png-f17983f3421db399b8b15b36826357b5.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "3711bc1521a68020dbe6b1ff0f151d8a"
+}
+
+[deps]
+
+source_file="res://assets/turel/glb file_plastic2_Normal_13.png"
+dest_files=["res://.godot/imported/glb file_plastic2_Normal_13.png-f17983f3421db399b8b15b36826357b5.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=1
+roughness/src_normal="res://assets/glb file_plastic2_Normal_13.png"
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

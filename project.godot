@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="Third Project"
 
+[filesystem]
+
+import/fbx/enabled=false
+
 [input]
 
 pitch_down={

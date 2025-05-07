@@ -17,7 +17,11 @@ script/source = "extends CharacterBody3D
 var gravity = ProjectSettings.get_setting(\"physics/3d/default_gravity\")
 var proc = 0
 var a = Vector3(0,0,0)
+var mouse_sensitivity = 0.003
+var camera_pitch = 0.0
 
+@onready var camera_pivot = $CameraPivot
+@onready var camera_arm = $CameraPivot/SpringArm3D
 @onready var motor_sound_0 = $idler
 @onready var motor_sound_1 = $light_motor
 @onready var motor_sound_2 = $light_motor1
@@ -27,6 +31,7 @@ var a = Vector3(0,0,0)
 @onready var motor_sound_6 = $Hard1
 @onready var motor_sound_7 = $Hard2
 @onready var bomb = $SecretWeapon
+
 
 func _physics_process(delta):
 	# Процент тяги двигателя
@@ -103,13 +108,26 @@ func _physics_process(delta):
 	a = Utils.acceleration(velocity,0.5, gravity,proc,position.y,yaw, roll,pitch)
 	print(\"Углы \", rad_to_deg(yaw),\" \",  rad_to_deg(roll),\" \", rad_to_deg(pitch))
 	velocity = velocity + a*delta
-	print(\"Скорость \",velocity.length()*3.6)
+	print(\"Скорость \",velocity.length())
 	print(\"Вертикальная скорость \", velocity.y)
 	print(\"Мощность двигателя \", proc*100, \"%\")
 	print(\"Высота \", position.y)
 	print(\"Базис \", rot*Vector3(0,deg_to_rad(90),0))
 	move_and_slide()
-	
+
+
+func _unhandled_input(event):
+	if event is InputEventMouseMotion:
+		# Вращаем только camera_pivot вокруг оси Y
+		camera_pivot.rotate_y(-event.relative.x * mouse_sensitivity)
+		
+		# Вращаем камеру вокруг оси X (верх/вниз)
+		camera_pitch = clamp(camera_pitch - event.relative.y * mouse_sensitivity, deg_to_rad(-80), deg_to_rad(80))
+		camera_arm.rotation.x = camera_pitch
+
+
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 "
 
 [sub_resource type="BoxMesh" id="BoxMesh_of6dv"]
@@ -157,10 +175,6 @@ size = Vector3(0.01, 0.001, 1)
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = SubResource("GDScript_i78y6")
 metadata/_edit_group_ = true
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.999921, -0.00447472, 0.0117798, 3.09025e-15, 0.934826, 0.355107, -0.012601, -0.355079, 0.934752, -0.382714, 1.62076, 2.31551)
-fov = 73.125
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.000924994, 0, -1, 0, 1, 0, 1, 0, 0.000924994, -0.0820814, -0.022005, 0.0817533)
@@ -310,3 +324,12 @@ stream = ExtResource("8_uptls")
 
 [node name="SecretWeapon" parent="." instance=ExtResource("9_pof3a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0649792, -0.222806, 2.84033e-09)
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.77416e-08, 0.93165, 1.54975)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+transform = Transform3D(0.999921, -0.0044747, 0.0117797, 3.09025e-15, 0.934826, 0.355107, -0.012601, -0.355079, 0.934751, -0.382714, 3.88106, 6.25615)
+fov = 73.125
