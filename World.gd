@@ -5,7 +5,8 @@ extends Node3D
 func _ready():
 	pass # Replace with function body.
 
+@onready var drone = $dron
+@onready var hud = $dron_hud
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	hud.update_status(drone.velocity, drone.global_transform.origin, drone.proc)
