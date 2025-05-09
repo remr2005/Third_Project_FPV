@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://scences/forbidden_area/ColorRect.gd" id="1_y244k"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f71gc"]
-size = Vector3(100, 100, 100)
+size = Vector3(300, 300, 300)
 
 [node name="ForbiddenArea" type="Area3D"]
 script = ExtResource("1_6bna0")

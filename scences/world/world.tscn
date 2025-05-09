@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dvtujcx83mhwd" path="res://scences/dron/dron.tscn" id="2_mswk8"]
 [ext_resource type="AudioStream" uid="uid://c1ujpxjuk6xw6" path="res://sounds/04-Meydan-Surreal-Forest(chosic.com).mp3" id="3_dud80"]
 [ext_resource type="PackedScene" uid="uid://dwrvs1ey6l4nn" path="res://scences/hud/drone_hud.tscn" id="4_xq7q6"]
-[ext_resource type="PackedScene" uid="uid://bu3g6b12dkgiu" path="res://scences/forbidden_area/forbidden_area.tscn" id="5_permv"]
+[ext_resource type="PackedScene" uid="uid://dlgk75spv13yf" path="res://scences/coin/Coin.tscn" id="6_cy6ow"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_xh2ix"]
 size = Vector3(2000, 1, 2000)
@@ -37,4 +37,5 @@ autoplay = true
 
 [node name="dron_hud" parent="." instance=ExtResource("4_xq7q6")]
 
-[node name="ForbiddenArea" parent="." instance=ExtResource("5_permv")]
+[node name="Coin" parent="." instance=ExtResource("6_cy6ow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.82725, 0.5, -1.11542)
