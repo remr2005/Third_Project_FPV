@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://bu3g6b12dkgiu"]
+
+[ext_resource type="Script" path="res://scences/forbidden_area/Label.gd" id="1_0mq35"]
+[ext_resource type="Script" path="res://scences/forbidden_area/forbidden_area.gd" id="1_6bna0"]
+[ext_resource type="FontFile" uid="uid://bkvmjch26jcxl" path="res://fonts/LanaPixel.ttf" id="1_mu2t8"]
+[ext_resource type="Script" path="res://scences/forbidden_area/ColorRect.gd" id="1_y244k"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f71gc"]
+size = Vector3(100, 100, 100)
+
+[node name="ForbiddenArea" type="Area3D"]
+script = ExtResource("1_6bna0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0502319, 0, 0)
+shape = SubResource("BoxShape3D_f71gc")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1160.0
+offset_bottom = 658.0
+color = Color(0, 0, 0, 0)
+script = ExtResource("1_y244k")
+
+[node name="Label" type="Label" parent="ColorRect"]
+offset_right = 1147.0
+offset_bottom = 644.0
+theme_override_fonts/font = ExtResource("1_mu2t8")
+theme_override_font_sizes/font_size = 51
+text = "Вы вошли в запретную зону, пожалуйста вернитесь в игровую зону"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+script = ExtResource("1_0mq35")
+
+[node name="TimeLable" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 1149.0
+offset_bottom = 75.0
+theme_override_fonts/font = ExtResource("1_mu2t8")
+horizontal_alignment = 1
+vertical_alignment = 1
