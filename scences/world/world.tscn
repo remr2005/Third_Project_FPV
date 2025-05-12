@@ -29,7 +29,7 @@ shape = SubResource("BoxShape3D_wpcpj")
 transform = Transform3D(1, 0, 0, 0, -0.15095, 0.988541, 0, -0.988541, -0.15095, 0, 8.69227, 0)
 
 [node name="dron" parent="." instance=ExtResource("2_mswk8")]
-transform = Transform3D(-0.925989, 0, 0.37755, 0, 1, 0, -0.37755, 0, -0.925989, -0.265207, 0.958282, 0.430694)
+transform = Transform3D(-0.925989, 0, 0.37755, 0, 1, 0, -0.37755, 0, -0.925989, -0.265207, 6.95829, 0.430694)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_dud80")
@@ -39,7 +39,7 @@ autoplay = true
 [node name="dron_hud" parent="." instance=ExtResource("4_xq7q6")]
 
 [node name="Coin" parent="." instance=ExtResource("6_cy6ow")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.82725, 0.5, -1.11542)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113147, 0.5, -0.115422)
 
 [node name="Rocket" parent="." instance=ExtResource("6_wrmxb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.82153, 3.47918, 71.4267)

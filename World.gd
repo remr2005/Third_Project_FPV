@@ -9,4 +9,4 @@ func _ready():
 @onready var hud = $dron_hud
 
 func _process(delta):
-	hud.update_status(drone.velocity, drone.global_transform.origin, drone.proc)
+	hud.update_status(drone.linear_velocity, drone.global_transform.origin, drone.proc)
