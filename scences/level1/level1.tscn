@@ -186,3 +186,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 271.579, 152.091, 333.423)
 
 [node name="ForbiddenArea9" parent="." instance=ExtResource("4_tgttb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 271.579, 152.091, -265.863)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.582279, 0.812989, 0, -0.812989, -0.582279, 0, 89.9568, 40.0587)
+light_energy = 1.676
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0

@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://d00kpao42kn14"]
+
+[ext_resource type="PackedScene" uid="uid://cc1rnqd6la5ck" path="res://assets/rocket/PL12.glb" id="1_jk7de"]
+[ext_resource type="Script" path="res://scences/rocket/rocket.gd" id="1_s4ttu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h3xom"]
+size = Vector3(0.145508, 0.196899, 3.80255)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l4x8u"]
+size = Vector3(500, 500, 500)
+
+[node name="Rocket" type="CharacterBody3D"]
+script = ExtResource("1_s4ttu")
+
+[node name="PL122" parent="." instance=ExtResource("1_jk7de")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0288086, 0.0100708, -0.0115051)
+shape = SubResource("BoxShape3D_h3xom")
+
+[node name="Vision3D" type="Area3D" parent="."]
+
+[node name="Vision" type="CollisionShape3D" parent="Vision3D"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, -355)
+shape = SubResource("BoxShape3D_l4x8u")

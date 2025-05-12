@@ -22,6 +22,7 @@ color = Color(0, 0, 0, 0)
 script = ExtResource("1_y244k")
 
 [node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 0
 offset_right = 1147.0
 offset_bottom = 644.0
 theme_override_fonts/font = ExtResource("1_mu2t8")
