@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2fge3encaao2"]
+
+[ext_resource type="FontFile" uid="uid://bkvmjch26jcxl" path="res://fonts/LanaPixel.ttf" id="1_0fsoy"]
+[ext_resource type="Script" path="res://scences/coin_hud/coins_count1.gd" id="1_pd0po"]
+[ext_resource type="Script" path="res://scences/coin_hud/Label.gd" id="2_tywqd"]
+
+[node name="CoinsCount" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pd0po")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 975.0
+offset_top = 3.0
+offset_right = 1149.0
+offset_bottom = 75.0
+theme_override_fonts/font = ExtResource("1_0fsoy")
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_tywqd")

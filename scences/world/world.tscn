@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2mrpqixbsfml"]
+[gd_scene load_steps=10 format=3 uid="uid://c2mrpqixbsfml"]
 
 [ext_resource type="Script" path="res://World.gd" id="1_6vyjw"]
 [ext_resource type="PackedScene" uid="uid://dvtujcx83mhwd" path="res://scences/dron/dron.tscn" id="2_mswk8"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dwrvs1ey6l4nn" path="res://scences/hud/drone_hud.tscn" id="4_xq7q6"]
 [ext_resource type="PackedScene" uid="uid://dlgk75spv13yf" path="res://scences/coin/Coin.tscn" id="6_cy6ow"]
 [ext_resource type="PackedScene" uid="uid://d00kpao42kn14" path="res://scences/rocket/rocket.tscn" id="6_wrmxb"]
+[ext_resource type="PackedScene" uid="uid://c2fge3encaao2" path="res://scences/coin_hud/coins_count.tscn" id="7_yhuah"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_xh2ix"]
 size = Vector3(2000, 1, 2000)
@@ -43,3 +44,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113147, 0.5, -0.115422)
 
 [node name="Rocket" parent="." instance=ExtResource("6_wrmxb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.82153, 3.47918, 71.4267)
+
+[node name="CoinsCount" parent="." instance=ExtResource("7_yhuah")]
+
+[node name="Coin2" parent="." instance=ExtResource("6_cy6ow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113147, 0.5, -16.4839)

@@ -17,7 +17,17 @@ func _physics_process(delta):
 		var forward = -transform.basis.z.normalized()
 		var new_dir = forward.lerp(to_target, delta * turn_speed).normalized()
 		look_at(global_position + new_dir, Vector3.UP)
+
 	move_and_slide()
+
+	# Проверка столкновений
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_collider().name == "dron":
+			collision.get_collider().queue_free()
+
+
+
 
 func _on_body_entered(body):
 	if body.name == "dron":
