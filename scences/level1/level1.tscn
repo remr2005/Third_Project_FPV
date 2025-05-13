@@ -1,13 +1,14 @@
-[gd_scene load_steps=17 format=3 uid="uid://7xalcrfhycvn"]
+[gd_scene load_steps=18 format=3 uid="uid://7xalcrfhycvn"]
 
 [ext_resource type="PackedScene" uid="uid://b24vnkemqfrov" path="res://assets/map1/polygonal_apocalyptic_urban_ruins.glb" id="1_5cjgv"]
 [ext_resource type="Script" path="res://scences/level1/level1.gd" id="1_gap6w"]
 [ext_resource type="PackedScene" uid="uid://dvtujcx83mhwd" path="res://scences/dron/dron.tscn" id="2_dyo6o"]
 [ext_resource type="PackedScene" uid="uid://bu3g6b12dkgiu" path="res://scences/forbidden_area/forbidden_area.tscn" id="4_tgttb"]
-[ext_resource type="AudioStream" uid="uid://c1ujpxjuk6xw6" path="res://sounds/04-Meydan-Surreal-Forest(chosic.com).mp3" id="5_w1ul3"]
+[ext_resource type="AudioStream" uid="uid://0776vvmgucg" path="res://sounds/Surasshu - Eek! (Extended Version).wav" id="5_vdona"]
 [ext_resource type="PackedScene" uid="uid://dwrvs1ey6l4nn" path="res://scences/hud/drone_hud.tscn" id="6_d065m"]
 [ext_resource type="PackedScene" uid="uid://dlgk75spv13yf" path="res://scences/coin/Coin.tscn" id="7_uepfi"]
 [ext_resource type="PackedScene" uid="uid://c2fge3encaao2" path="res://scences/coin_hud/coins_count.tscn" id="8_rfp43"]
+[ext_resource type="PackedScene" uid="uid://3ysphu6t3kyv" path="res://scences/pause_menu/pause.tscn" id="9_f8epl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ws1dy"]
 size = Vector3(289.838, 0.737656, 241.716)
@@ -198,7 +199,7 @@ light_indirect_energy = 0.0
 light_volumetric_fog_energy = 0.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_w1ul3")
+stream = ExtResource("5_vdona")
 volume_db = -19.66
 autoplay = true
 
@@ -208,3 +209,5 @@ autoplay = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113147, 28.8923, 31.1357)
 
 [node name="CoinsCount" parent="." instance=ExtResource("8_rfp43")]
+
+[node name="Pause" parent="." instance=ExtResource("9_f8epl")]

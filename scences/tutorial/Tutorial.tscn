@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ry14jyrprwyg"]
+[gd_scene load_steps=10 format=3 uid="uid://ry14jyrprwyg"]
 
 [ext_resource type="Script" path="res://scences/tutorial/Tutorial.gd" id="1_c37vf"]
 [ext_resource type="PackedScene" uid="uid://dvtujcx83mhwd" path="res://scences/dron/dron.tscn" id="1_hpynx"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c2fge3encaao2" path="res://scences/coin_hud/coins_count.tscn" id="3_od1um"]
 [ext_resource type="FontFile" uid="uid://bkvmjch26jcxl" path="res://fonts/LanaPixel.ttf" id="5_x1uyj"]
 [ext_resource type="PackedScene" uid="uid://dlgk75spv13yf" path="res://scences/coin/Coin.tscn" id="6_ka4ax"]
+[ext_resource type="AudioStream" uid="uid://0776vvmgucg" path="res://sounds/Surasshu - Eek! (Extended Version).wav" id="7_5sefh"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_n3bcs"]
 size = Vector3(30, 0.1, 30)
@@ -87,3 +88,7 @@ autowrap_mode = 3
 
 [node name="Coin" parent="." instance=ExtResource("6_ka4ax")]
 transform = Transform3D(-0.0225827, 0, 0.999745, 0, 1, 0, -0.999745, 0, -0.0225827, -2.65196, 13.2701, -1.66754)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_5sefh")
+autoplay = true
