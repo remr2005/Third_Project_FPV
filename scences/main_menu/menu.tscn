@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqx0mr3g4pjp6"]
+
+[ext_resource type="FontFile" uid="uid://bkvmjch26jcxl" path="res://fonts/LanaPixel.ttf" id="1_g4ifs"]
+[ext_resource type="Script" path="res://scences/main_menu/CenterContainer.gd" id="1_j801f"]
+[ext_resource type="Script" path="res://scences/main_menu/options.gd" id="2_3jhml"]
+[ext_resource type="Script" path="res://scences/main_menu/quit_btn.gd" id="2_qvau6"]
+[ext_resource type="Script" path="res://scences/main_menu/NewGameButton.gd" id="3_ot506"]
+[ext_resource type="Script" path="res://scences/main_menu/Continue.gd" id="4_2jvu4"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 648.0
+script = ExtResource("1_j801f")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="NewGameButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_g4ifs")
+theme_override_font_sizes/font_size = 22
+text = "Новая игра"
+script = ExtResource("3_ot506")
+
+[node name="Continue" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_g4ifs")
+theme_override_font_sizes/font_size = 22
+text = "Продолжить иру"
+script = ExtResource("4_2jvu4")
+
+[node name="options" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_g4ifs")
+theme_override_font_sizes/font_size = 22
+text = "Полноэкранный режим"
+script = ExtResource("2_3jhml")
+
+[node name="quit_btn" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_g4ifs")
+theme_override_font_sizes/font_size = 22
+text = "Выход"
+script = ExtResource("2_qvau6")
