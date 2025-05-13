@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scences/main3D/main3D.gd" id="1_bp524"]
 [ext_resource type="PackedScene" uid="uid://b874re5bqpgru" path="res://scences/main3D/False_Dron.tscn" id="1_qln3i"]
-[ext_resource type="PackedScene" uid="uid://b24vnkemqfrov" path="res://assets/map1/polygonal_apocalyptic_urban_ruins.glb" id="3_r0lrx"]
 [ext_resource type="PackedScene" uid="uid://cqx0mr3g4pjp6" path="res://scences/main_menu/menu.tscn" id="4_b6goi"]
+[ext_resource type="PackedScene" uid="uid://kaxych7cpyqf" path="res://scences/level1/map1.tscn" id="5_fmghn"]
 [ext_resource type="AudioStream" uid="uid://0776vvmgucg" path="res://sounds/Surasshu - Eek! (Extended Version).wav" id="5_i0bex"]
 
 [node name="Main3d" type="Node3D"]
@@ -17,11 +17,11 @@ transform = Transform3D(0.000744766, -0.999692, -0.0247874, -0.0300233, -0.02479
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.0191101, 0.999817, 0, -0.999817, -0.0191101, 0, 11.773, 0)
 
-[node name="Sketchfab_Scene" parent="." instance=ExtResource("3_r0lrx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.86731, -59.6242, -49.3565)
-
 [node name="Menu" parent="." instance=ExtResource("4_b6goi")]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_i0bex")
 autoplay = true
+
+[node name="MainMap" parent="." instance=ExtResource("5_fmghn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -60, -60)

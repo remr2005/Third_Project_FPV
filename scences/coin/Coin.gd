@@ -12,4 +12,3 @@ func _on_body_entered(body):
 	if body.name == "dron":
 		audio_stream_player.play()
 		visible = false
-
